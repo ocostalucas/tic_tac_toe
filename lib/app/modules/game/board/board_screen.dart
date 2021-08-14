@@ -11,12 +11,21 @@ class BoardScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          GridView.builder(
-            itemCount: 9,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
+          Expanded(
+            child: Container(
+              color: Colors.grey[300],
+              child: GridView.builder(
+                itemCount: 9,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  crossAxisSpacing: 2,
+                  mainAxisSpacing: 2,
+                ),
+                itemBuilder: (BuildContext context, int index) => Container(
+                  color: Colors.white,
+                ),
+              ),
             ),
-            itemBuilder: (BuildContext context, int index) => Container(),
           )
         ],
       ),

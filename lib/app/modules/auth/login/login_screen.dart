@@ -31,7 +31,7 @@ class LoginScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 50),
               child: SocialButtonWidget(
-                onTap: () {},
+                onTap: () async => await Navigator.pushReplacementNamed(context, "/game"),
               ),
             ),
           ],

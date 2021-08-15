@@ -9,9 +9,13 @@ class PlayerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 115,
-      padding: EdgeInsets.symmetric(vertical: 5),  
-      decoration: BoxDecoration(color: AppColors.darkBlue,
-      borderRadius: BorderRadius.all(Radius.circular(8))
+      padding: EdgeInsets.symmetric(vertical: 5),
+      decoration: BoxDecoration(
+        color: AppColors.darkBlue,
+        borderRadius: BorderRadius.all(
+          Radius.circular(8),
+        ),
+        border: Border.all(width: 1, color: AppColors.secondary),
       ),
       child: Column(
         children: [

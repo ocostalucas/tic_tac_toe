@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:tic_tac_toe/app/data/enums/player_type.dart';
 import 'package:tic_tac_toe/app/modules/game/game_controller.dart';
 import 'package:tic_tac_toe/app/shared/core/app_colors.dart';
@@ -20,37 +21,40 @@ class BoardWidget extends StatelessWidget {
       padding: EdgeInsets.all(15),
       child: AspectRatio(
         aspectRatio: 1,
-        child: ValueListenableBuilder<List<PlayerType>>(
-          valueListenable: controller.boardNotifier,
-          builder: (_, board, __) => GridView.builder(
-            itemCount: 9,
-            padding: EdgeInsets.zero,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
-              crossAxisSpacing: 15,
-              mainAxisSpacing: 15,
-            ),
-            itemBuilder: (BuildContext context, int index) => Material(
-              borderRadius: BorderRadius.all(
-                Radius.circular(8),
+        child: Observer(
+          builder: (_) {
+            return GridView.builder(
+              itemCount: controller.board.length,
+              padding: EdgeInsets.zero,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                crossAxisSpacing: 15,
+                mainAxisSpacing: 15,
               ),
-              color: AppColors.primary,
-              child: InkWell(
-                onTap: board[index] == PlayerType.none ? () {} : null,
-                splashColor: AppColors.border.withOpacity(.1),
+              itemBuilder: (BuildContext context, int index) => Material(
                 borderRadius: BorderRadius.all(
                   Radius.circular(8),
                 ),
-                child: FittedBox(
-                  child: board[index] == PlayerType.player
-                      ? Text('X', style: AppTypography.body)
-                      : board[index] == PlayerType.computer
-                          ? Text('O', style: AppTypography.body)
-                          : null,
+                color: AppColors.primary,
+                child: InkWell(
+                  onTap: controller.board[index] == PlayerType.none
+                      ? () => controller.move(position: index)
+                      : null,
+                  splashColor: AppColors.border.withOpacity(.1),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(8),
+                  ),
+                  child: FittedBox(
+                    child: controller.board[index] == PlayerType.player
+                        ? Text('X', style: AppTypography.body)
+                        : controller.board[index] == PlayerType.computer
+                            ? Text('O', style: AppTypography.body)
+                            : Text(''),
+                  ),
                 ),
               ),
-            ),
-          ),
+            );
+          },
         ),
       ),
     );

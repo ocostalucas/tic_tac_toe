@@ -33,7 +33,9 @@ class _GameScreenState extends State<GameScreen> {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: BoardWidget(controller: controller),
+                child: BoardWidget(
+                  controller: controller,
+                ),
               ),
             ],
           ),

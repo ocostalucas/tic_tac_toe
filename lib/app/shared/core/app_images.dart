@@ -6,4 +6,5 @@ class AppImages {
   static String get hard => "${pathImg}hard.jpg";
   static String get normal => "${pathImg}normal.jpg";
   static String get easy => "${pathImg}easy.jpg";
+  static String get draw => "${pathImg}draw.jpg";
 }

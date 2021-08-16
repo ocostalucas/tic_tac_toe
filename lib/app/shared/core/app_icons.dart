@@ -6,7 +6,6 @@ const String pathIcons = 'assets/svg/';
 class AppIcons {
   static const logoMini = '${pathIcons}logo-mini.svg';
   static const logoFull = '${pathIcons}logo-full.svg';
-  static const googleLogo = '${pathIcons}google-logo.svg';
 }
 
 class AppIcon extends StatelessWidget {

@@ -1,3 +1,4 @@
+import 'package:tic_tac_toe/app/data/ia/easy_ia.dart';
 import 'package:tic_tac_toe/app/shared/core/app_colors.dart';
 import 'package:tic_tac_toe/app/shared/core/app_images.dart';
 
@@ -6,7 +7,7 @@ import 'enums/user_type.dart';
 import 'models/player.dart';
 
 class Players {
-  static Player getPlayer(UserType? type) {
+  static Player getPlayer(UserType type) {
     switch (type) {
       case UserType.easyComputer:
         return Player(
@@ -15,6 +16,7 @@ class Players {
           selectorColor: AppColors.oSelector,
           logo: AppImages.easy,
           type: PlayerType.computer,
+          ia: EasyIa(),
         );
 
       case UserType.normalComputer:

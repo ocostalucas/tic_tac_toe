@@ -24,6 +24,21 @@ mixin _$GameController on _GameControllerBase, Store {
     });
   }
 
+  final _$playerTurnAtom = Atom(name: '_GameControllerBase.playerTurn');
+
+  @override
+  PlayerType get playerTurn {
+    _$playerTurnAtom.reportRead();
+    return super.playerTurn;
+  }
+
+  @override
+  set playerTurn(PlayerType value) {
+    _$playerTurnAtom.reportWrite(value, super.playerTurn, () {
+      super.playerTurn = value;
+    });
+  }
+
   final _$_GameControllerBaseActionController =
       ActionController(name: '_GameControllerBase');
 
@@ -63,7 +78,8 @@ mixin _$GameController on _GameControllerBase, Store {
   @override
   String toString() {
     return '''
-board: ${board}
+board: ${board},
+playerTurn: ${playerTurn}
     ''';
   }
 }

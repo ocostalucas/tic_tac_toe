@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:tic_tac_toe/app/data/enums/user_type.dart';
+import 'package:tic_tac_toe/app/data/players.dart';
 import 'package:tic_tac_toe/app/modules/game/game_controller.dart';
 
 import 'components/board_widget.dart';
@@ -21,15 +24,25 @@ class _GameScreenState extends State<GameScreen> {
         child: SafeArea(
           child: Column(
             children: [
-              Container(
-                margin: EdgeInsets.symmetric(vertical: 20, horizontal: 50),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    PlayerWidget(),
-                    PlayerWidget(),
-                  ],
-                ),
+              Observer(
+                builder: (_) {
+                  return Container(
+                    margin: EdgeInsets.symmetric(vertical: 20, horizontal: 50),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        PlayerWidget(
+                          player: Players.getPlayer(UserType.human),
+                          playerTurn: controller.playerTurn,
+                        ),
+                        PlayerWidget(
+                          player: Players.getPlayer(UserType.easyComputer),
+                          playerTurn: controller.playerTurn,
+                        ),
+                      ],
+                    ),
+                  );
+                },
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),

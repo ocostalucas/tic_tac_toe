@@ -45,10 +45,16 @@ class BoardWidget extends StatelessWidget {
                     Radius.circular(8),
                   ),
                   child: FittedBox(
-                    child: controller.board[index] == PlayerType.player
-                        ? Text('X', style: AppTypography.body)
+                    child: controller.board[index] == PlayerType.human
+                        ? Text('X',
+                            style: AppTypography.body.copyWith(
+                              color: AppColors.xSelector,
+                            ))
                         : controller.board[index] == PlayerType.computer
-                            ? Text('O', style: AppTypography.body)
+                            ? Text('O',
+                                style: AppTypography.body.copyWith(
+                                  color: AppColors.oSelector,
+                                ))
                             : Text(''),
                   ),
                 ),

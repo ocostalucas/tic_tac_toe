@@ -30,13 +30,13 @@ abstract class _GameControllerBase with Store {
   ].asObservable();
 
   @observable
-  PlayerType playerTurn = PlayerType.player;
+  PlayerType playerTurn = PlayerType.human;
 
   List<int> playerMoves = [];
   List<int> computerMoves = [];
 
   void move({required int position}) {
-    if (playerTurn == PlayerType.player)
+    if (playerTurn == PlayerType.human)
       playerMove(position: position);
     else
       computerMove(position: position);
@@ -44,7 +44,7 @@ abstract class _GameControllerBase with Store {
 
   @action
   void playerMove({required int position}) {
-    board[position] = PlayerType.player;
+    board[position] = PlayerType.human;
     playerMoves.add(position);
     playerTurn = PlayerType.computer;
   }
@@ -53,6 +53,6 @@ abstract class _GameControllerBase with Store {
   void computerMove({required int position}) {
     board[position] = PlayerType.computer;
     computerMoves.add(position);
-    playerTurn = PlayerType.player;
+    playerTurn = PlayerType.human;
   }
 }

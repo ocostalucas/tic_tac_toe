@@ -1,5 +1,5 @@
-enum PlayerType{
-  player,
+enum PlayerType {
+  human,
   computer,
-  none
+  none,
 }

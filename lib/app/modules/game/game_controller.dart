@@ -52,12 +52,6 @@ abstract class _GameControllerBase with Store {
   // Se o jogo já está em andamento o mesmo é reiniciado
   void changeDifficulty({required DifficultyType difficulty}) {
     onChange(difficulty: difficulty);
-
-    print(game !=
-        Game(
-          difficulty: game.difficulty,
-        ));
-
     if (game !=
         Game(
           difficulty: game.difficulty,

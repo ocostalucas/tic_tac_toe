@@ -4,6 +4,8 @@ import 'package:tic_tac_toe/app/app_widget.dart';
 import 'package:tic_tac_toe/app/shared/core/app_colors.dart';
 
 void main() {
+  /// Garente que o código nativo foi chamando
+  /// antes de iniciar a aplicação
   WidgetsFlutterBinding.ensureInitialized();
 
   runApp(AppFirebase());
@@ -15,6 +17,7 @@ class AppFirebase extends StatefulWidget {
 }
 
 class _AppFirebaseState extends State<AppFirebase> {
+  /// Metodo de inicialização Firebase
   final Future<FirebaseApp> _initialization = Firebase.initializeApp();
 
   @override
@@ -22,6 +25,7 @@ class _AppFirebaseState extends State<AppFirebase> {
     return FutureBuilder(
       future: _initialization,
       builder: (context, snapshot) {
+        ///Verifica se há erros
         if (snapshot.hasError) {
           return Material(
             child: Center(
@@ -31,8 +35,12 @@ class _AppFirebaseState extends State<AppFirebase> {
               ),
             ),
           );
+
+          /// Ao concluir a inicialização a aplicação é inicializada
         } else if (snapshot.connectionState == ConnectionState.done) {
           return AppWidget();
+
+          /// Caso contrário, o inicialização ainda está sendo carregada
         } else {
           return Material(
             color: AppColors.primary,

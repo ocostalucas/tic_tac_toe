@@ -33,7 +33,7 @@ abstract class _GameControllerBase with Store {
   Game game = Game();
 
   @observable
-  Player computer = Players.getPlayer(UserType.easyComputer);
+  Player computer = Players.getPlayer(UserType.normalComputer);
 
   @action
   void onChange({

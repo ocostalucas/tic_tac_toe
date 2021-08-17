@@ -1,4 +1,5 @@
 import 'package:tic_tac_toe/app/data/ia/easy_ia.dart';
+import 'package:tic_tac_toe/app/data/ia/normal_ia.dart';
 import 'package:tic_tac_toe/app/shared/core/app_colors.dart';
 import 'package:tic_tac_toe/app/shared/core/app_images.dart';
 
@@ -26,6 +27,7 @@ class Players {
           selectorColor: AppColors.oSelector,
           logo: AppImages.normal,
           type: PlayerType.computer,
+          ia: NormalIa(),
         );
 
       case UserType.hardComputer:

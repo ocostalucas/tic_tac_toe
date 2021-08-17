@@ -24,7 +24,7 @@ class BoardWidget extends StatelessWidget {
         child: Observer(
           builder: (_) {
             return GridView.builder(
-              itemCount: controller.board.length,
+              itemCount: controller.game.board.length,
               padding: EdgeInsets.zero,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,
@@ -37,7 +37,9 @@ class BoardWidget extends StatelessWidget {
                 ),
                 color: AppColors.primary,
                 child: InkWell(
-                  onTap: controller.board[index] == PlayerType.none
+                  onTap: controller.game.board[index] == PlayerType.none &&
+                          controller.game.playerTurn == PlayerType.human &&
+                          controller.game.winner == null
                       ? () => controller.move(position: index)
                       : null,
                   splashColor: AppColors.border.withOpacity(.1),
@@ -45,12 +47,12 @@ class BoardWidget extends StatelessWidget {
                     Radius.circular(8),
                   ),
                   child: FittedBox(
-                    child: controller.board[index] == PlayerType.human
+                    child: controller.game.board[index] == PlayerType.human
                         ? Text('X',
                             style: AppTypography.body.copyWith(
                               color: AppColors.xSelector,
                             ))
-                        : controller.board[index] == PlayerType.computer
+                        : controller.game.board[index] == PlayerType.computer
                             ? Text('O',
                                 style: AppTypography.body.copyWith(
                                   color: AppColors.oSelector,

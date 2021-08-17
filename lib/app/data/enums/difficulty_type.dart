@@ -1,5 +1,5 @@
-enum DifficultyType{
+enum DifficultyType {
   easy,
   normal,
-  hard 
+  hard,
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tic_tac_toe/app/shared/components/buttons/social_button_widget.dart';
+import 'package:tic_tac_toe/app/shared/components/buttons/button_widget.dart';
 import 'package:tic_tac_toe/app/shared/core/app_colors.dart';
 import 'package:tic_tac_toe/app/shared/core/app_images.dart';
 import 'package:tic_tac_toe/app/shared/core/app_typography.dart';
@@ -30,8 +30,10 @@ class LoginScreen extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 50),
-              child: SocialButtonWidget(
-                onTap: () async => await Navigator.pushReplacementNamed(context, "/game"),
+              child: ButtonWidget(
+                label: 'Jogar',
+                onTap: () async =>
+                    await Navigator.pushReplacementNamed(context, "/game"),
               ),
             ),
           ],

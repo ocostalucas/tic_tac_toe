@@ -6,6 +6,7 @@ import 'package:tic_tac_toe/app/modules/game/game_controller.dart';
 
 import 'components/board_widget.dart';
 import 'components/player_widget.dart';
+import 'components/winnner_widget.dart';
 
 class GameScreen extends StatefulWidget {
   GameScreen({Key? key}) : super(key: key);
@@ -33,23 +34,37 @@ class _GameScreenState extends State<GameScreen> {
                       children: [
                         PlayerWidget(
                           player: Players.getPlayer(UserType.human),
-                          playerTurn: controller.playerTurn,
+                          playerTurn: controller.game.playerTurn,
                         ),
                         PlayerWidget(
-                          player: Players.getPlayer(UserType.easyComputer),
-                          playerTurn: controller.playerTurn,
+                          player: controller.computer,
+                          playerTurn: controller.game.playerTurn,
                         ),
                       ],
                     ),
                   );
                 },
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: BoardWidget(
-                  controller: controller,
-                ),
-              ),
+              Observer(
+                builder: (_) {
+                  return Stack(
+                    alignment: AlignmentDirectional.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: BoardWidget(
+                          controller: controller,
+                        ),
+                      ),
+                      if (controller.game.winner != null)
+                        WinnnerWidget(
+                          winner: controller.game.winner,
+                          controller: controller,
+                        )
+                    ],
+                  );
+                },
+              )
             ],
           ),
         ),

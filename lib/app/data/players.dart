@@ -5,6 +5,7 @@ import 'package:tic_tac_toe/app/shared/core/app_images.dart';
 
 import 'enums/player_type.dart';
 import 'enums/user_type.dart';
+import 'ia/hard_ia.dart';
 import 'models/player.dart';
 
 class Players {
@@ -37,6 +38,7 @@ class Players {
           selectorColor: AppColors.oSelector,
           logo: AppImages.hard,
           type: PlayerType.computer,
+          ia: HardIa(),
         );
 
       default:

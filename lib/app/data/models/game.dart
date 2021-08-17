@@ -5,6 +5,9 @@ import 'package:flutter/foundation.dart';
 
 import 'package:tic_tac_toe/app/data/enums/difficulty_type.dart';
 import 'package:tic_tac_toe/app/data/enums/player_type.dart';
+import 'package:tic_tac_toe/app/data/enums/user_type.dart';
+import 'package:tic_tac_toe/app/data/models/player.dart';
+import 'package:tic_tac_toe/app/data/players.dart';
 
 class Game {
   final DocumentReference? reference;
@@ -33,6 +36,14 @@ class Game {
     this.playerTurn = PlayerType.human,
     this.winner,
   });
+
+  Player get computer => Players.getPlayer(
+        difficulty == DifficultyType.normal
+            ? UserType.normalComputer
+            : difficulty == DifficultyType.hard
+                ? UserType.hardComputer
+                : UserType.easyComputer,
+      );
 
   bool get hasMove => (computerMoves.length + humanMoves.length) < 9;
 

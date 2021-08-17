@@ -3,6 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:tic_tac_toe/app/data/enums/user_type.dart';
 import 'package:tic_tac_toe/app/data/players.dart';
 import 'package:tic_tac_toe/app/modules/game/game_controller.dart';
+import 'package:tic_tac_toe/app/shared/components/buttons/round_button_widget.dart';
 
 import 'components/board_widget.dart';
 import 'components/player_widget.dart';
@@ -25,6 +26,23 @@ class _GameScreenState extends State<GameScreen> {
         child: SafeArea(
           child: Column(
             children: [
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    RoundButtonWidget(
+                        onTap: () => Navigator.of(context).pop(),
+                        icon: Icon(Icons.arrow_back_ios_new,
+                            color: Colors.white)),
+                    RoundButtonWidget(
+                        onTap: () => Navigator.pushNamed(context, '/config',
+                            arguments: controller),
+                        icon: Icon(Icons.settings, color: Colors.white)),
+                  ],
+                ),
+              ),
               Observer(
                 builder: (_) {
                   return Container(
@@ -37,7 +55,7 @@ class _GameScreenState extends State<GameScreen> {
                           playerTurn: controller.game.playerTurn,
                         ),
                         PlayerWidget(
-                          player: controller.computer,
+                          player: controller.game.computer,
                           playerTurn: controller.game.playerTurn,
                         ),
                       ],

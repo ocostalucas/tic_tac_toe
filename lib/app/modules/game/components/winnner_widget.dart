@@ -38,7 +38,7 @@ class WinnnerWidget extends StatelessWidget {
                 backgroundImage: AssetImage(winner == PlayerType.human
                     ? Players.getPlayer(UserType.human).logo
                     : winner == PlayerType.computer
-                        ? controller.computer.logo
+                        ? controller.game.computer.logo
                         : AppImages.draw),
               ),
               SizedBox(width: 10),

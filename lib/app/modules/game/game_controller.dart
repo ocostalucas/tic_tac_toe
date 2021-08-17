@@ -1,11 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:tic_tac_toe/app/data/enums/difficulty_type.dart';
 import 'package:tic_tac_toe/app/data/enums/player_type.dart';
 
 import 'package:mobx/mobx.dart';
-import 'package:tic_tac_toe/app/data/enums/user_type.dart';
 import 'package:tic_tac_toe/app/data/models/game.dart';
-import 'package:tic_tac_toe/app/data/models/player.dart';
-import 'package:tic_tac_toe/app/data/players.dart';
+
 import 'package:tic_tac_toe/app/data/repositories/game_repository.dart';
 import 'package:tic_tac_toe/app/data/services/checker_winner_service.dart';
 part 'game_controller.g.dart';
@@ -21,29 +20,23 @@ abstract class _GameControllerBase with Store {
   /// Inicia um novo jogo
   @action
   Future<void> newGame() async {
-    game = Game();
-
-    /// Cria uma intancia do jogo no Firebase
-    /// E adiciona a referência no model
-    DocumentReference? reference = await repository.addGame(game: game);
-    onChange(reference: reference);
+    game = Game(
+      difficulty: game.difficulty,
+    );
   }
 
   @observable
   Game game = Game();
 
-  @observable
-  Player computer = Players.getPlayer(UserType.normalComputer);
-
   @action
-  void onChange({
-    DocumentReference? reference,
-    List<PlayerType>? board,
-    PlayerType? playerTurn,
-    PlayerType? winner,
-    List<int>? humanMoves,
-    List<int>? computerMoves,
-  }) {
+  void onChange(
+      {DocumentReference? reference,
+      List<PlayerType>? board,
+      PlayerType? playerTurn,
+      PlayerType? winner,
+      List<int>? humanMoves,
+      List<int>? computerMoves,
+      DifficultyType? difficulty}) {
     game = game.copyWith(
       reference: reference,
       board: board,
@@ -51,21 +44,46 @@ abstract class _GameControllerBase with Store {
       winner: winner,
       humanMoves: humanMoves,
       computerMoves: computerMoves,
+      difficulty: difficulty,
     );
+  }
 
+  //Altera dificuldade do jogo
+  // Se o jogo já está em andamento o mesmo é reiniciado
+  void changeDifficulty({required DifficultyType difficulty}) {
+    onChange(difficulty: difficulty);
+
+    print(game !=
+        Game(
+          difficulty: game.difficulty,
+        ));
+
+    if (game !=
+        Game(
+          difficulty: game.difficulty,
+        )) newGame();
+  }
+
+  Future<void> move({required int position}) async {
+    await humanMove(position: position);
+    await saveGame();
+  }
+
+  Future<void> saveGame() async {
     ///Atualiza a instância do jogo no Firebase
     if (game.reference != null) {
       repository.updateGame(game: game);
+    } else {
+      /// Cria uma intancia do jogo no Firebase
+      /// E adiciona a referência no model
+      DocumentReference? reference = await repository.addGame(game: game);
+      onChange(reference: reference);
     }
-  }
-
-  void move({required int position}) {
-    humanMove(position: position);
   }
 
   /// Movimento do player
   @action
-  void humanMove({required int position}) {
+  Future<void> humanMove({required int position}) async {
     addToBoard(position: position, player: PlayerType.human);
 
     List<int> moves = List.from(game.humanMoves);
@@ -76,14 +94,14 @@ abstract class _GameControllerBase with Store {
 
     if (game.hasMove && game.winner == null) {
       onChange(playerTurn: PlayerType.computer);
-      computerMove();
+      await computerMove();
     }
   }
 
   /// Movimento do computador
   @action
   Future<void> computerMove() async {
-    int autoMove = computer.ia!.autoMove(game: game);
+    int autoMove = game.computer.ia!.autoMove(game: game);
 
     await Future.delayed(Duration(milliseconds: 500));
 

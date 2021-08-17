@@ -4,8 +4,8 @@ import 'package:tic_tac_toe/app/shared/core/app_colors.dart';
 import 'package:tic_tac_toe/app/shared/core/app_images.dart';
 import 'package:tic_tac_toe/app/shared/core/app_typography.dart';
 
-class LoginScreen extends StatelessWidget {
-  LoginScreen({Key? key}) : super(key: key);
+class SplashScreen extends StatelessWidget {
+  SplashScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +32,7 @@ class LoginScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 50),
               child: ButtonWidget(
                 label: 'Jogar',
-                onTap: () async =>
-                    await Navigator.pushReplacementNamed(context, "/game"),
+                onTap: () async => await Navigator.pushNamed(context, "/game"),
               ),
             ),
           ],

@@ -24,26 +24,19 @@ mixin _$GameController on _GameControllerBase, Store {
     });
   }
 
-  final _$computerAtom = Atom(name: '_GameControllerBase.computer');
-
-  @override
-  Player get computer {
-    _$computerAtom.reportRead();
-    return super.computer;
-  }
-
-  @override
-  set computer(Player value) {
-    _$computerAtom.reportWrite(value, super.computer, () {
-      super.computer = value;
-    });
-  }
-
   final _$newGameAsyncAction = AsyncAction('_GameControllerBase.newGame');
 
   @override
   Future<void> newGame() {
     return _$newGameAsyncAction.run(() => super.newGame());
+  }
+
+  final _$humanMoveAsyncAction = AsyncAction('_GameControllerBase.humanMove');
+
+  @override
+  Future<void> humanMove({required int position}) {
+    return _$humanMoveAsyncAction
+        .run(() => super.humanMove(position: position));
   }
 
   final _$computerMoveAsyncAction =
@@ -64,7 +57,8 @@ mixin _$GameController on _GameControllerBase, Store {
       PlayerType? playerTurn,
       PlayerType? winner,
       List<int>? humanMoves,
-      List<int>? computerMoves}) {
+      List<int>? computerMoves,
+      DifficultyType? difficulty}) {
     final _$actionInfo = _$_GameControllerBaseActionController.startAction(
         name: '_GameControllerBase.onChange');
     try {
@@ -74,18 +68,8 @@ mixin _$GameController on _GameControllerBase, Store {
           playerTurn: playerTurn,
           winner: winner,
           humanMoves: humanMoves,
-          computerMoves: computerMoves);
-    } finally {
-      _$_GameControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void humanMove({required int position}) {
-    final _$actionInfo = _$_GameControllerBaseActionController.startAction(
-        name: '_GameControllerBase.humanMove');
-    try {
-      return super.humanMove(position: position);
+          computerMoves: computerMoves,
+          difficulty: difficulty);
     } finally {
       _$_GameControllerBaseActionController.endAction(_$actionInfo);
     }
@@ -127,8 +111,7 @@ mixin _$GameController on _GameControllerBase, Store {
   @override
   String toString() {
     return '''
-game: ${game},
-computer: ${computer}
+game: ${game}
     ''';
   }
 }

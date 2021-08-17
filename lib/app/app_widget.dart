@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:tic_tac_toe/app/modules/config/config_screen.dart';
 import 'package:tic_tac_toe/app/modules/game/game_screen.dart';
 import 'package:tic_tac_toe/app/shared/core/app_theme.dart';
 
-import 'modules/auth/login/login_screen.dart';
+import 'modules/game/game_controller.dart';
+import 'modules/splash/splash_screen.dart';
 
 class AppWidget extends StatelessWidget {
   AppWidget({Key? key}) : super(key: key);
@@ -15,8 +17,11 @@ class AppWidget extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: "/splash",
       routes: {
-        "/splash": (context) => LoginScreen(),
+        "/splash": (context) => SplashScreen(),
         "/game": (context) => GameScreen(),
+        "/config": (context) => ConfigScreen(
+            controller:
+                ModalRoute.of(context)!.settings.arguments as GameController),
       },
     );
   }
